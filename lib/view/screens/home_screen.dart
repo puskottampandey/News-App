@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: width,
               child: FutureBuilder<ModelforHeadLine>(
                   future: newsViewModel.fetchChannelHedlines(),
-                  builder: (context, snapshot) {
+                  builder: (BuildContext context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
                         child: SpinKitCircle(
@@ -55,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     } else {
                       return ListView.builder(
+                        scrollDirection: Axis.horizontal,
                         itemCount: snapshot.data!.articles!.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
@@ -66,12 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .data!.articles![index].urlToImage
                                         .toString(),
                                     fit: BoxFit.cover,
-                                    placeholder: (context, url) => Container(
-                                      child: const SpinKitCircle(
-                                        color: Colors.grey,
-                                        size: 40,
-                                      ),
-                                    ),
                                   ),
                                 )
                               ],
