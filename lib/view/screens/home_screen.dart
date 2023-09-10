@@ -14,9 +14,14 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+enum FilterList { bbcNews, aryNews, independent, reuters, cnn, alJazeera }
+
 class _HomeScreenState extends State<HomeScreen> {
   NewsViewModel newsViewModel = NewsViewModel();
   final format = DateFormat('MMMM dd,YYYY');
+
+  FilterList? selectMenu;
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height * 1;
@@ -24,7 +29,43 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        actions: [Icon(Icons.do_not_touch)],
+        actions: [
+          PopupMenuButton<FilterList>(
+            initialValue: selectMenu,
+            itemBuilder: ((context) => <PopupMenuEntry<FilterList>>[
+                  const PopupMenuItem<FilterList>(
+                      value: FilterList.bbcNews,
+                      child: Text(
+                        "BBC News",
+                      )),
+                  const PopupMenuItem<FilterList>(
+                      value: FilterList.aryNews,
+                      child: Text(
+                        "AryNews",
+                      )),
+                  const PopupMenuItem<FilterList>(
+                      value: FilterList.independent,
+                      child: Text(
+                        "Independent",
+                      )),
+                  const PopupMenuItem<FilterList>(
+                      value: FilterList.reuters,
+                      child: Text(
+                        "Recuters",
+                      )),
+                  const PopupMenuItem<FilterList>(
+                      value: FilterList.cnn,
+                      child: Text(
+                        "CNN",
+                      )),
+                  const PopupMenuItem<FilterList>(
+                      value: FilterList.alJazeera,
+                      child: Text(
+                        "Aljazeera",
+                      ))
+                ]),
+          )
+        ],
         leading: IconButton(
           onPressed: () {},
           icon: Image.asset(
@@ -128,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             const SizedBox(
                                               height: 20,
                                             ),
-                                            Container(
+                                            SizedBox(
                                               width: width * 0.7,
                                               child: Row(
                                                 mainAxisAlignment:
