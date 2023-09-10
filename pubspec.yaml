@@ -39,6 +39,7 @@ dependencies:
   # package for the loading screen
   flutter_spinkit: ^5.2.0
   http: any
+  intl: any
 
   cached_network_image: any
 
