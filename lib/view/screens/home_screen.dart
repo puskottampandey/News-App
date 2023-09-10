@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        actions: [Icon(Icons.do_not_touch)],
         leading: IconButton(
           onPressed: () {},
           icon: Image.asset(
@@ -44,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ListView(
         children: [
           SizedBox(
-              height: height * 0.55,
+              height: height * 0.4,
               width: width,
               child: FutureBuilder<ModelforHeadLine>(
                   future: newsViewModel.fetchChannelHedlines(),
@@ -80,10 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .data!.articles![index].urlToImage
                                         .toString(),
                                     fit: BoxFit.cover,
-                                    placeholder: (context, url) => Container(
-                                      child: SpinKitCircle(
-                                          color: Colors.grey.shade700),
-                                    ),
+                                    placeholder: (context, url) =>
+                                        SpinKitCircle(
+                                            color: Colors.grey.shade700),
                                     errorWidget: (context, url, error) =>
                                         const Icon(Icons.error_outline,
                                             color: Colors.red),
@@ -97,43 +98,70 @@ class _HomeScreenState extends State<HomeScreen> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
                                   ),
-                                  child: Container(
-                                    alignment: Alignment.bottomCenter,
-                                    height: height * 0.2,
+                                  child: SizedBox(
+                                    height: height * 0.13,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            width: width * 0.7,
-                                            child: Text(
-                                              snapshot
-                                                  .data!.articles![index].title
-                                                  .toString(),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.bold),
+                                      child: Container(
+                                        alignment: Alignment.bottomCenter,
+                                        height: height * 0.22,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              width: width * 0.7,
+                                              child: Text(
+                                                snapshot.data!.articles![index]
+                                                    .title
+                                                    .toString(),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 10,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
                                             ),
-                                          ),
-                                          Container(
-                                            height: height * 0.05,
-                                            child: Row(
-                                              children: [
-                                                Text(snapshot
-                                                    .data!
-                                                    .articles![index]
-                                                    .source!
-                                                    .name
-                                                    .toString()),
-                                                Text(format.format(datetime)),
-                                              ],
+                                            const SizedBox(
+                                              height: 20,
                                             ),
-                                          )
-                                        ],
+                                            Container(
+                                              width: width * 0.7,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    snapshot
+                                                        .data!
+                                                        .articles![index]
+                                                        .source!
+                                                        .name
+                                                        .toString(),
+                                                    style: GoogleFonts.poppins(
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.red,
+                                                    ),
+                                                    maxLines: 2,
+                                                  ),
+                                                  Text(
+                                                    format.format(datetime),
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 10,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
