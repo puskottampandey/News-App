@@ -19,6 +19,7 @@ enum FilterList { bbcNews, aryNews, independent, reuters, cnn, alJazeera }
 class _HomeScreenState extends State<HomeScreen> {
   NewsViewModel newsViewModel = NewsViewModel();
   final format = DateFormat('MMMM dd,YYYY');
+  String name = 'bbc-news';
 
   FilterList? selectMenu;
 
@@ -31,6 +32,17 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         actions: [
           PopupMenuButton<FilterList>(
+            onSelected: (FilterList iteam) {
+              if (FilterList.bbcNews.name == iteam.name) {
+                name = 'bbc-news';
+              }
+              if (FilterList.aryNews.name == iteam.name) {
+                name = 'ary-news';
+              }
+              setState(() {
+                selectMenu = iteam;
+              });
+            },
             initialValue: selectMenu,
             itemBuilder: ((context) => <PopupMenuEntry<FilterList>>[
                   const PopupMenuItem<FilterList>(
