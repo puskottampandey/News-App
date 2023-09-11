@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,14 +14,14 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-enum FilterList { bbcNews, aryNews, independent, reuters, cnn, alJazeera }
+enum FilterList { bbcNews, aryNews, businesInsider, cnn, alJazeera }
 
 class _HomeScreenState extends State<HomeScreen> {
   NewsViewModel newsViewModel = NewsViewModel();
   final format = DateFormat('MMMM dd,YYYY');
   String source = 'bbc-news';
 
-  FilterList selectMenu = FilterList.bbcNews;
+  FilterList? selectMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -32,51 +32,58 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         actions: [
           PopupMenuButton<FilterList>(
-            onSelected: (FilterList iteam) {
-              if (FilterList.bbcNews.name == iteam.name) {
-                source = 'bbc-news';
-              }
-              if (FilterList.aryNews.name == iteam.name) {
-                source = "ary-news";
-              }
-              setState(() {
-                selectMenu = iteam;
-              });
-            },
-            initialValue: selectMenu,
-            itemBuilder: ((context) => <PopupMenuEntry<FilterList>>[
-                  const PopupMenuItem<FilterList>(
-                      value: FilterList.bbcNews,
-                      child: Text(
-                        "BBC News",
-                      )),
-                  const PopupMenuItem<FilterList>(
-                      value: FilterList.aryNews,
-                      child: Text(
-                        "AryNews",
-                      )),
-                  const PopupMenuItem<FilterList>(
-                      value: FilterList.independent,
-                      child: Text(
-                        "Independent",
-                      )),
-                  const PopupMenuItem<FilterList>(
-                      value: FilterList.reuters,
-                      child: Text(
-                        "Recuters",
-                      )),
-                  const PopupMenuItem<FilterList>(
-                      value: FilterList.cnn,
-                      child: Text(
-                        "CNN",
-                      )),
-                  const PopupMenuItem<FilterList>(
+              onSelected: (FilterList iteam) {
+                if (FilterList.bbcNews.name == iteam.name) {
+                  source = 'bbc-news';
+                }
+                if (FilterList.aryNews.name == iteam.name) {
+                  source = "ary-news";
+                }
+                if (FilterList.alJazeera.name == iteam.name) {
+                  source = "al-jazeera-english";
+                }
+
+                if (FilterList.businesInsider.name == iteam.name) {
+                  source = "business-insider";
+                }
+                if (FilterList.cnn.name == iteam.name) {
+                  source = "cnn";
+                }
+
+                setState(() {
+                  selectMenu = iteam;
+                });
+              },
+              initialValue: selectMenu,
+              itemBuilder: (BuildContext context) =>
+                  <PopupMenuEntry<FilterList>>[
+                    const PopupMenuItem<FilterList>(
+                        value: FilterList.bbcNews,
+                        child: Text(
+                          "BBC News",
+                        )),
+                    const PopupMenuItem<FilterList>(
+                        value: FilterList.aryNews,
+                        child: Text(
+                          "AryNews",
+                        )),
+                    const PopupMenuItem<FilterList>(
                       value: FilterList.alJazeera,
                       child: Text(
                         "Aljazeera",
-                      ))
-                ]),
-          )
+                      ),
+                    ),
+                    const PopupMenuItem<FilterList>(
+                        value: FilterList.cnn,
+                        child: Text(
+                          "CNN",
+                        )),
+                    const PopupMenuItem<FilterList>(
+                        value: FilterList.businesInsider,
+                        child: Text(
+                          "Business-Insider",
+                        )),
+                  ]),
         ],
         leading: IconButton(
           onPressed: () {},
@@ -102,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: height * 0.4,
               width: width,
               child: FutureBuilder<ModelforHeadLine>(
-                  future: newsViewModel.fetchChannelHedlines(),
+                  future: newsViewModel.fetchChannelHedlines(source),
                   builder: (BuildContext context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
