@@ -19,9 +19,9 @@ enum FilterList { bbcNews, aryNews, independent, reuters, cnn, alJazeera }
 class _HomeScreenState extends State<HomeScreen> {
   NewsViewModel newsViewModel = NewsViewModel();
   final format = DateFormat('MMMM dd,YYYY');
-  String name = 'bbc-news';
+  String source = 'bbc-news';
 
-  FilterList? selectMenu;
+  FilterList selectMenu = FilterList.bbcNews;
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
           PopupMenuButton<FilterList>(
             onSelected: (FilterList iteam) {
               if (FilterList.bbcNews.name == iteam.name) {
-                name = 'bbc-news';
+                source = 'bbc-news';
               }
               if (FilterList.aryNews.name == iteam.name) {
-                name = 'ary-news';
+                source = "ary-news";
               }
               setState(() {
                 selectMenu = iteam;
