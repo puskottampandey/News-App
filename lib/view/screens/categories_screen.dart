@@ -20,12 +20,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   String categoryName = 'general';
 
   List<String> categories = [
-    'General',
-    'Entertainment',
-    'Health',
-    'Sports',
-    'Business',
-    'Technology'
+    'general',
+    'entertainment',
+    'health',
+    'sports',
+    'business',
+    'technology'
   ];
 
   @override
@@ -46,8 +46,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        categoryName = categories[index];
-                        setState(() {});
+                        setState(() {
+                          categoryName = categories[index];
+                        });
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(right: 12),
@@ -84,29 +85,26 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       ),
                     );
                   } else {
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data!.articles!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        DateTime datetime = DateTime.parse(snapshot
-                            .data!.articles![index].publishedAt
-                            .toString());
+                    return Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.articles!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          DateTime datetime = DateTime.parse(snapshot
+                              .data!.articles![index].publishedAt
+                              .toString());
 
-                        return Stack(
-                          children: [
-                            Container(
-                              height: height * 0.6,
-                              width: width * 0.9,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: height * 0.01,
-                              ),
-                              child: ClipRRect(
+                          return Row(
+                            children: [
+                              ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: CachedNetworkImage(
                                   imageUrl: snapshot
                                       .data!.articles![index].urlToImage
                                       .toString(),
                                   fit: BoxFit.cover,
+                                  height: height * .18,
+                                  width: width * .3,
                                   placeholder: (context, url) => SpinKitCircle(
                                       color: Colors.grey.shade700),
                                   errorWidget: (context, url, error) =>
@@ -114,84 +112,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                           color: Colors.red),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              left: 20,
-                              bottom: 2,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: SizedBox(
-                                  height: height * 0.13,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      alignment: Alignment.bottomCenter,
-                                      height: height * 0.22,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: width * 0.7,
-                                            child: Text(
-                                              snapshot
-                                                  .data!.articles![index].title
-                                                  .toString(),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          SizedBox(
-                                            width: width * 0.7,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  snapshot
-                                                      .data!
-                                                      .articles![index]
-                                                      .source!
-                                                      .name
-                                                      .toString(),
-                                                  style: GoogleFonts.poppins(
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.red,
-                                                  ),
-                                                  maxLines: 2,
-                                                ),
-                                                Text(
-                                                  format.format(datetime),
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        );
-                      },
+                            ],
+                          );
+                        },
+                      ),
                     );
                   }
                 }),
