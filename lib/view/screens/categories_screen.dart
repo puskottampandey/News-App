@@ -1,123 +1,80 @@
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:newsapp/models/news_headline_model.dart';
-import 'package:newsapp/view/screens/categories_screen.dart';
-import 'package:newsapp/view_model/news_view_model.dart';
+import 'package:newsapp/models/categories_news_model.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+import '../../view_model/news_view_model.dart';
+
+class CategoriesScreen extends StatefulWidget {
+  const CategoriesScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
 }
 
-enum FilterList { bbcNews, aryNews, businesInsider, cnn, alJazeera }
-
-class _HomeScreenState extends State<HomeScreen> {
+class _CategoriesScreenState extends State<CategoriesScreen> {
   NewsViewModel newsViewModel = NewsViewModel();
   final format = DateFormat('MMMM dd,YYYY');
-  String source = 'bbc-news';
+  String categoryName = 'general';
 
-  FilterList? selectMenu;
+  List<String> categories = [
+    'General',
+    'Entertainment',
+    'Health',
+    'Sports',
+    'Business',
+    'Technology'
+  ];
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height * 1;
     final width = MediaQuery.sizeOf(context).width * 1;
-
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          PopupMenuButton<FilterList>(
-              onSelected: (FilterList iteam) {
-                if (FilterList.bbcNews.name == iteam.name) {
-                  source = 'bbc-news';
-                }
-                if (FilterList.aryNews.name == iteam.name) {
-                  source = "ary-news";
-                }
-                if (FilterList.alJazeera.name == iteam.name) {
-                  source = "al-jazeera-english";
-                }
-
-                if (FilterList.businesInsider.name == iteam.name) {
-                  source = "business-insider";
-                }
-                if (FilterList.cnn.name == iteam.name) {
-                  source = "cnn";
-                }
-
-                setState(() {
-                  selectMenu = iteam;
-                });
-              },
-              initialValue: selectMenu,
-              itemBuilder: (BuildContext context) =>
-                  <PopupMenuEntry<FilterList>>[
-                    const PopupMenuItem<FilterList>(
-                        value: FilterList.bbcNews,
-                        child: Text(
-                          "BBC News",
-                        )),
-                    const PopupMenuItem<FilterList>(
-                        value: FilterList.aryNews,
-                        child: Text(
-                          "AryNews",
-                        )),
-                    const PopupMenuItem<FilterList>(
-                      value: FilterList.alJazeera,
-                      child: Text(
-                        "Aljazeera",
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 50,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        categoryName = categories[index];
+                        setState(() {});
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 12),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: categoryName == categories[index]
+                                  ? Colors.blue
+                                  : Colors.grey,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Center(
+                              child: Text(
+                                categories[index],
+                                style: GoogleFonts.poppins(
+                                    fontSize: 13, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    const PopupMenuItem<FilterList>(
-                        value: FilterList.cnn,
-                        child: Text(
-                          "CNN",
-                        )),
-                    const PopupMenuItem<FilterList>(
-                        value: FilterList.businesInsider,
-                        child: Text(
-                          "Business-Insider",
-                        )),
-                  ]),
-        ],
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: ((context) => const CategoriesScreen()),
-              ),
-            );
-          },
-          icon: Image.asset(
-            "images/category_icon.png",
-            height: 20,
-            width: 20,
-          ),
-        ),
-        title: Center(
-          child: Text(
-            "News",
-            style: GoogleFonts.poppins(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+                    );
+                  }),
             ),
-          ),
-        ),
-      ),
-      body: ListView(
-        children: [
-          SizedBox(
-            height: height * 0.4,
-            width: width,
-            child: FutureBuilder<ModelforHeadLine>(
-                future: newsViewModel.fetchChannelHedlines(source),
+            const SizedBox(),
+            FutureBuilder<CategoriesModel>(
+                future: newsViewModel.fetchCategoriesNewsapi(categoryName),
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
@@ -238,8 +195,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }
                 }),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
