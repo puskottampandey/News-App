@@ -94,25 +94,70 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               .data!.articles![index].publishedAt
                               .toString());
 
-                          return Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: CachedNetworkImage(
-                                  imageUrl: snapshot
-                                      .data!.articles![index].urlToImage
-                                      .toString(),
-                                  fit: BoxFit.cover,
-                                  height: height * .18,
-                                  width: width * .3,
-                                  placeholder: (context, url) => SpinKitCircle(
-                                      color: Colors.grey.shade700),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error_outline,
-                                          color: Colors.red),
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: CachedNetworkImage(
+                                    imageUrl: snapshot
+                                        .data!.articles![index].urlToImage
+                                        .toString(),
+                                    fit: BoxFit.cover,
+                                    height: height * .18,
+                                    width: width * .3,
+                                    placeholder: (context, url) =>
+                                        SpinKitCircle(
+                                            color: Colors.grey.shade700),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error_outline,
+                                            color: Colors.red),
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Expanded(
+                                  child: Container(
+                                    height: height * 0.18,
+                                    width: width * 0.5,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          snapshot.data!.articles![index].title
+                                              .toString(),
+                                          maxLines: 4,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              snapshot.data!.articles![index]
+                                                  .source!.name
+                                                  .toString(),
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              format.format(datetime),
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           );
                         },
                       ),
