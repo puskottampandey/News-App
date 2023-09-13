@@ -87,6 +87,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   } else {
                     return Expanded(
                       child: ListView.builder(
+                        scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         itemCount: snapshot.data!.articles!.length,
                         itemBuilder: (BuildContext context, int index) {
@@ -95,7 +96,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               .toString());
 
                           return Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(4.0),
                             child: Row(
                               children: [
                                 ClipRRect(
@@ -115,45 +116,44 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                             color: Colors.red),
                                   ),
                                 ),
-                                Expanded(
-                                  child: Container(
-                                    height: height * 0.18,
-                                    width: width * 0.5,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          snapshot.data!.articles![index].title
-                                              .toString(),
-                                          maxLines: 4,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              snapshot.data!.articles![index]
-                                                  .source!.name
-                                                  .toString(),
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                              format.format(datetime),
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.bold),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
+                                SizedBox(
+                                  height: height * .18,
+                                  width: width * 0.6,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        snapshot
+                                            .data!.articles![index].source!.name
+                                            .toString(),
+                                        maxLines: 4,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            snapshot.data!.articles![index]
+                                                .source!.name
+                                                .toString(),
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            format.format(datetime),
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        ],
+                                      )
+                                    ],
                                   ),
                                 )
                               ],
