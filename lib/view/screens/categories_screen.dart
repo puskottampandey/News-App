@@ -124,8 +124,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Text(
-                                        snapshot
-                                            .data!.articles![index].source!.name
+                                        snapshot.data!.articles![index].title
                                             .toString(),
                                         maxLines: 4,
                                         overflow: TextOverflow.ellipsis,
@@ -143,7 +142,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                 .toString(),
                                             style: GoogleFonts.poppins(
                                                 fontSize: 10,
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.red),
                                           ),
                                           Text(
                                             format.format(datetime),
