@@ -1,5 +1,6 @@
 # newsapp
 
+![ScreenRecord](https://drive.google.com/file/d/1uUek4-tw3wAjYIseN6k46ysEJciBK5hD/view?usp=drivesdk)
 ![photo_6071024964426905410_y](https://github.com/puskottampandey/News-App/assets/83902408/11c42c45-8ddd-4018-859b-a68a7d9e2a6b)
 ![photo_6071024964426905409_y](https://github.com/puskottampandey/News-App/assets/83902408/870043f4-a801-49f9-9bf3-71774fabf45c)
 ![photo_6071024964426905408_y](https://github.com/puskottampandey/News-App/assets/83902408/c8947cda-e58a-4127-b139-18eb8fbe489e)
