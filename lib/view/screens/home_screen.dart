@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
@@ -168,6 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 left: 20,
                                 bottom: 2,
                                 child: Card(
+                                  color: Colors.transparent,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
                                   ),
@@ -193,6 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: GoogleFonts.poppins(
+                                                    color: Colors.white,
                                                     fontSize: 10,
                                                     fontWeight:
                                                         FontWeight.bold),
@@ -228,7 +232,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     style: GoogleFonts.poppins(
                                                         fontSize: 10,
                                                         fontWeight:
-                                                            FontWeight.bold),
+                                                            FontWeight.bold,
+                                                        color: Colors.white),
                                                   ),
                                                 ],
                                               ),
